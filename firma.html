@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="firma_app">
+	<head>
+		<meta charset="UTF-8" />
+		<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE" />
+
+		<script type="text/javascript" src="angular.js"></script>
+		<script type="text/javascript" src="jquery.js"></script>
+		<link rel="stylesheet" type="text/css" media="screen" href="bootstrap.css"></link>
+		
+		<script type="text/javascript" src="firma.js"></script>
+		<link rel="stylesheet" type="text/css" media="screen"  href="firma.css"></link>
+		
+		<!-- sparkmd5 -->
+		<script type="text/javascript" src="http://cdn.rawgit.com/satazor/SparkMD5/master/spark-md5.js"></script>
+		
+		<!-- jsrsasign -->
+		<script type="text/javascript" src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
+		
+	</head>
+	<body ng-controller="firmaCtrl">
+
+		<form id="formFirma" name="formFirma" novalidate>		
+		
+			<div class="form-group">
+				<label for="file">File:</label>
+				<div class="input-group">
+	                <span class="input-group-btn">
+						<span class="btn btn-default btn-file">
+							Browse <input id="file" ng-model="file" type="file" accept=".pdf" required />
+						</span>
+					</span>
+					<input type="text" class="form-control" readonly />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="cert">Cert:</label>
+				<div class="input-group">
+	                <span class="input-group-btn">
+						<span class="btn btn-default btn-file">
+							Browse <input id="cert" ng-model="cert" type="file" accept=".cer" required />
+						</span>
+					</span>
+					<input type="text" id="cert_file_name" class="form-control" readonly />
+				</div>
+			</div>
+			
+			<div class="form-group">	
+				<label for="key">Key:</label>
+				<div class="input-group">
+	                <span class="input-group-btn">
+						<span class="btn btn-default btn-file">
+							Browse <input id="key" ng-model="key" type="file" accept=".key" required />
+						</span>
+					</span>
+					<input type="text" id="key_file_name" class="form-control" readonly />
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="key">Password:</label>
+				<input id="password" ng-model="password" type="password" required />
+			</div>
+			
+			<div class="form-group">
+				<label for="hash_alg">Algorithm:</label>
+				<select id="hash_alg">
+					<option value="sha1" selected>SHA1
+					<option value="sha256">SHA256
+					<option value="sha512">SHA512
+					<option value="md5">MD5
+					<option value="ripemd160">RIPEMD-160
+				</select>
+
+			<!-- ng-disabled="formFirma.$invalid"  -->
+			<p align="center">
+				<button ng-click="firmar()" class="btn btn-success">Sign it!</button>
+				<img src="spinner.gif" style="height: 15px;" ng-show="loading" />
+			</p>
+			
+			<br />
+			<div style="padding-left: 30px;">
+				<b>Cert B64:</b> <br />
+				<textarea rows="5" cols="150" readonly id="cert_b64"></textarea>
+
+				<div id="certInfo"></div>
+
+				<br />
+				<b>Key B64:</b> <br />
+				<textarea rows="5" cols="150" readonly id="key_b64"></textarea>
+
+				<div id="keyInfo"></div>
+				
+				<!--<br />
+				<b>Password:</b> <input type="text" ng-model="password" readonly id="password_plain" style="width: 40%;" />-->
+				
+				<br />
+				<b>File Hash:</b> <input type="text" readonly id="hash_archivo" style="width: 40%;" />
+				
+				<br />
+				<b>Sign:</b> <br />
+				<textarea rows="3" cols="150" readonly id="la_pinche_firma" style="border-color: red;"></textarea>
+			</div>
+		</form>
+		
+	</body>
+</html>
