@@ -253,11 +253,16 @@ app.controller("firmaCtrl", function($scope ) {
 				);
 
 			// FIRMAR
-			var hashAlg = $('#hash_alg').val();
+			// var hashAlg = $('#hash_alg').val();
+			// console.log("with algorithm : " + hashAlg );
+			// var hSig = h.signString($('#hash_archivo').val(), hashAlg);
 
-			console.log("with algorithm : " + hashAlg );
-
-			var hSig = h.signString($('#hash_archivo').val(), hashAlg);
+			var sig = new KJUR.crypto.Signature({
+				"alg" : "SHA1withRSA"
+			});
+			sig.init(h);
+			sig.updateString($('#hash_archivo').val());
+			var hSig = sig.sign();
 
 			console.info("Firma :: " + hSig);
 
